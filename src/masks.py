@@ -1,4 +1,6 @@
 def get_mask_card_number(number_card: str) -> str:
+    if len(number_card) != 16:
+        return "Неверный номер карты"
     first_block: str = number_card[:4]
     second_block: str = number_card[4:6] + "**"
     third_block: str = "****"
