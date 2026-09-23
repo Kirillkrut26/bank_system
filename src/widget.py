@@ -15,5 +15,7 @@ def mask_account_card(card_type_number: str) -> str:
 
 
 def get_date(date_input: str) -> str:
+    if not date_input:
+        raise ValueError("Дата отсутствует")
     date = f"{date_input[8:10]}.{date_input[5:7]}.{date_input[:4]}"
     return date
