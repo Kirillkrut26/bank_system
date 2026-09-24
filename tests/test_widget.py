@@ -22,7 +22,7 @@ def valid_check_number():
 
 
 def test_check_mask_account_card(valid_check_number):
-    assert mask_account_card(valid_check_number) == "Счет **4305"
+    assert mask_account_card(valid_check_number) == "Счет ** 4305"
 
 
 @pytest.mark.parametrize(
