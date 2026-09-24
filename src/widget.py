@@ -1,8 +1,9 @@
 from typing import final
-from masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_card_number, get_mask_account
 
 
 def mask_account_card(card_type_number: str) -> str:
+    """"Маскирует номер карты или счета в зависимости от типа входной строки."""
     card_list = card_type_number.split()
     card_number: str = card_list[-1]
     card_type = " ".join(card_list[:-1])
@@ -15,6 +16,7 @@ def mask_account_card(card_type_number: str) -> str:
 
 
 def get_date(date_input: str) -> str:
+    """Конвертирует дату в формат ДД.ММ.ГГГГ."""
     if not date_input:
         raise ValueError("Дата отсутствует")
     date = f"{date_input[8:10]}.{date_input[5:7]}.{date_input[:4]}"
