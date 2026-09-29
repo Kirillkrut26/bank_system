@@ -10,3 +10,4 @@ def filter_by_state(list_dictionaries: list[dict], state: str = "EXECUTED") -> l
 def sort_by_date(list_dictionaries: list[dict], reverse: bool = True) -> list[dict]:
     """возвращает новый список, отсортированный по дате"""
     return sorted(list_dictionaries, key=lambda item: item["date"], reverse=reverse)
+
