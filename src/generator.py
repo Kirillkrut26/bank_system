@@ -15,4 +15,4 @@ def card_number_generator(start_generate: int, end_generate: int):
     """Генератор номеров карт по введенным значениям"""
     for time_number in range(start_generate, end_generate + 1):
         card_number = f"{time_number:016d}"
-        yield f"{card_number[:4]} {card_number[4:8]} {card_number[8:12]}  {card_number[12:16]}"
+        yield f"{card_number[:4]} {card_number[4:8]} {card_number[8:12]} {card_number[12:16]}"
