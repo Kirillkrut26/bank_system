@@ -1,4 +1,5 @@
 from typing import final
+from datetime import datetime
 from src.masks import get_mask_card_number, get_mask_account
 
 
@@ -14,10 +15,15 @@ def mask_account_card(card_type_number: str) -> str:
         card_type_number_mask = f"{card_type} {get_mask_card_number(card_number)}"
         return card_type_number_mask
 
-
 def get_date(date_input: str) -> str:
-    """Конвертирует дату в формат ДД.ММ.ГГГГ."""
-    if not date_input:
+    """Конвертирует дату из ISO-формата в ДД.ММ.ГГГГ."""
+    if not date_input or date_input.strip() == "":
         raise ValueError("Дата отсутствует")
-    date = f"{date_input[8:10]}.{date_input[5:7]}.{date_input[:4]}"
-    return date
+
+    try:
+        parsed_date = datetime.fromisoformat(date_input)
+    except ValueError:
+        raise ValueError("Некорректный формат даты")
+
+    # Форматируем в нужный вид ДД.ММ.ГГГГ
+    return parsed_date.strftime("%d.%m.%Y")
