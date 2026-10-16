@@ -19,7 +19,7 @@ def reader_csv(file_way):
 
 
 def reader_xlsx(file_way):
-    """Считывает финансовые операции из Excel-файла (.xlsx) и возвращает список словарей."""
+    """Считывает финансовые операции из Excel-файла (.xlsx) и возвращает список словарей"""
     try:
         df = pd.read_excel(file_way)
         transaction = df.to_dict("records")
