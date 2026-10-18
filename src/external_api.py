@@ -1,5 +1,11 @@
 import requests
+import os
+import requests
+from dotenv import load_dotenv
 
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 
 def convert_to_RUB(transaction):
     if (
@@ -13,7 +19,7 @@ def convert_to_RUB(transaction):
             "to": "RUB",
         }
         headers = {
-            "apikey": "Zqnoz39GUw0z9irhiGclQW6avhqJQBo5",
+            "apikey": API_KEY,
         }
         response = requests.get(url, params=payload, headers=headers)
         result = response.json()
