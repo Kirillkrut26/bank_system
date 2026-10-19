@@ -2,7 +2,7 @@ def filter_by_state(list_dictionaries: list[dict], state: str = "EXECUTED") -> l
     """ "возвращает новый список словарей, содержащий только те словари, у которых ключ state"""
     result = []
     for temporary_list_dictionaries in list_dictionaries:
-        if temporary_list_dictionaries["state"] == state:
+        if temporary_list_dictionaries.get("state") == state:
             result.append(temporary_list_dictionaries)
     return result
 
