@@ -26,4 +26,4 @@ def convert_to_RUB(transaction):
         result = response.json()
         return float(result["result"])
     else:
-        return transaction["operationAmount"]["amount"]
+        return float(transaction["operationAmount"]["amount"])

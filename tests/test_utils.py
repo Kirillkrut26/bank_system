@@ -1,24 +1,25 @@
-from unittest.mock import mock_open, patch
+from unittest.mock import patch, mock_open
 from src.utils import get_financial_data
 
 
-@patch("builtins.open", new_callable=mock_open, read_data='[{"id": 1, "state": "EXECUTED"}]')
-def test_get_financial_data_success(mock_file):
-    result = get_financial_data("fake_path.json")
+def test_get_financial_data_success():
+    fake_json_data = '[{"id": 1, "state": "EXECUTED"}]'
 
-    assert result == [{"id": 1, "state": "EXECUTED"}]
-    mock_file.assert_called_once_with("fake_path.json")
-
-
-@patch("builtins.open", new_callable=mock_open, read_data='{"status": "error", "message": "not a list"}')
-def test_get_financial_data_not_a_list(mock_file):
-    result = get_financial_data("fake_path.json")
-
-    assert result == []
+    with patch("builtins.open", mock_open(read_data=fake_json_data)) as mock_file:
+        result = get_financial_data("fake_path.json")
+        assert result == [{"id": 1, "state": "EXECUTED"}]
+        mock_file.assert_called_once_with("fake_path.json", encoding="utf-8")
 
 
-@patch("builtins.open", side_effect=FileNotFoundError)
-def test_get_financial_data_file_not_found(mock_file):
-    result = get_financial_data("missing_file.json")
+def test_get_financial_data_not_a_list():
+    fake_json_data = '{"status": "error", "message": "not a list"}'
 
-    assert result == []
+    with patch("builtins.open", mock_open(read_data=fake_json_data)):
+        result = get_financial_data("fake_path.json")
+        assert result == []
+
+
+def test_get_financial_data_file_not_found():
+    with patch("builtins.open", side_effect=FileNotFoundError):
+        result = get_financial_data("missing_file.json")
+        assert result == []
