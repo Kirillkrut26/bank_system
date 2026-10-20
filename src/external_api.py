@@ -1,4 +1,3 @@
-import requests
 import os
 import requests
 from dotenv import load_dotenv
@@ -7,7 +6,9 @@ load_dotenv()
 
 API_KEY = os.getenv("API_KEY")
 
+
 def convert_to_RUB(transaction):
+    """Конвертирует сумму транзакции в рубли"""
     if (
         transaction["operationAmount"]["currency"]["code"] == "USD"
         or transaction["operationAmount"]["currency"]["code"] == "EUR"

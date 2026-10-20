@@ -2,7 +2,8 @@ from src.utils import get_financial_data
 from src.processing import filter_by_state, sort_by_date
 from src.widget import get_date, mask_account_card
 from src.reader_csv import reader_csv, reader_xlsx
-
+from src.generator import filter_by_currency
+from src.search import process_bank_search
 
 def main():
     print(
@@ -66,7 +67,17 @@ def main():
             data_list_operation_filter = sorted(data_list_operation_filter, key=lambda x: x["date"], reverse=False)
         else:
             data_list_operation_filter = sorted(data_list_operation_filter, key=lambda x: x["date"], reverse=True)
+    print('Выводить только рублевые транзакции? Да/Нет')
+    user_chose = input().lower().strip()
+    if user_chose == 'да':
+        data_list_operation_filter = list(filter_by_currency(data_list_operation_filter, 'RUB'))
 
+    print('Отфильтровать список транзакций по определенному слову в описании? Да/Нет')
+    user_chose = input().lower().strip()
+    if user_chose == 'да':
+        print('Введите слово по которому будет фильтрация')
+        user_word = input().strip()
+        data_list_operation_filter = process_bank_search(data_list_operation, user_word)
     print(
         "Распечатываю итоговый список транзакций..."
         f"Всего банковских операций в выборке: {len(data_list_operation_filter)}"
@@ -90,3 +101,6 @@ def main():
                     f"{mask_account_card(into['from'])} -> {mask_account_card(into['to'])}\n",
                     summ_transaction,
                 )
+
+
+main()
