@@ -4,7 +4,6 @@ from src.external_api import convert_to_RUB
 
 @patch("src.external_api.requests.get")
 def test_convert_to_rub_usd(mock_get):
-    # Настраиваем фейковый ответ от API
     mock_get.return_value.json.return_value = {"result": 7500.0}
 
     transaction = {
@@ -27,5 +26,4 @@ def test_convert_to_rub_already_rub():
     }
 
     result = convert_to_RUB(transaction)
-    # Сравниваем с числом float, а не со строкой!
     assert result == 500.50
