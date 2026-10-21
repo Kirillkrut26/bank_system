@@ -1,7 +1,10 @@
-def filter_by_currency(list_of_transactions: list[dict], currency: str):
-    """Фильтрует список транзакций по заданной валюте"""
+def filter_by_currency(list_of_transactions, currency):
+    """Фильтрует список транзакций по заданной валюте (поддерживает JSON, CSV и XLSX)."""
     for transaction in list_of_transactions:
-        if transaction["operationAmount"]["currency"]["code"] == currency:
+        if "operationAmount" in transaction and isinstance(transaction["operationAmount"], dict):
+            if transaction["operationAmount"].get("currency", {}).get("code") == currency:
+                yield transaction
+        elif transaction.get("currency_code") == currency:
             yield transaction
 
 

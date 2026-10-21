@@ -86,21 +86,39 @@ def main():
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
     else:
         for into in data_list_operation_filter:
-            summ_transaction = (
-                f"Сумма {into['operationAmount']['amount']} {into['operationAmount']['currency']['name']}"
-            )
-            if into["description"] == "Открытие вклада":
-                print(
-                    f"{get_date(into['date'])} {into['description']} \n",
-                    f"{mask_account_card(into['to'])} \n",
-                    summ_transaction,
+            if 'operationAmount' in into and isinstance(into['operationAmount'], dict):
+                summ_transaction = (
+                    f"Сумма {into['operationAmount']['amount']} {into['operationAmount']['currency']['name']}"
                 )
+                if into["description"] == "Открытие вклада":
+                    print(
+                        f"{get_date(into['date'])} {into['description']} \n",
+                        f"{mask_account_card(into['to'])} \n",
+                        summ_transaction,
+                    )
+                else:
+                    print(
+                        f"{get_date(into['date'])} {into['description']}\n",
+                        f"{mask_account_card(into['from'])} -> {mask_account_card(into['to'])}\n",
+                        summ_transaction,
+                    )
             else:
-                print(
-                    f"{get_date(into['date'])} {into['description']}\n",
-                    f"{mask_account_card(into['from'])} -> {mask_account_card(into['to'])}\n",
-                    summ_transaction,
+                summ_transaction = (
+                    f"Сумма {into['amount']} {into['currency_name']}"
                 )
+                if into["description"] == "Открытие вклада":
+                    print(
+                        f"{get_date(into['date'])} {into['description']} \n",
+                        f"{mask_account_card(into['to'])} \n",
+                        summ_transaction,
+                    )
+                else:
+                    print(
+                        f"{get_date(into['date'])} {into['description']}\n",
+                        f"{mask_account_card(into['from'])} -> {mask_account_card(into['to'])}\n",
+                        summ_transaction,
+                    )
+
 
 
 main()
